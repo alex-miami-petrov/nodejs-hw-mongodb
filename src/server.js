@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import pino from 'pino';
-import contactController from './controllers/contactController.js';
+import contactController from './contactController.js';
 
 const logger = pino();
 const app = express();
@@ -15,6 +15,8 @@ app.use((req, res, next) => {
 });
 
 app.get('/contacts', contactController.getContacts);
+
+app.get('/contacts/:contactId', contactController.getContactById);
 
 app.use((req, res, next) => {
   res.status(404).json({ message: 'Not found' });

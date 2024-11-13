@@ -9,4 +9,13 @@ const getAllContacts = async () => {
   }
 };
 
-export default { getAllContacts };
+const getContactById = async (contactId) => {
+  try {
+    const contact = await Contact.findById(contactId);
+    return contact;
+  } catch (error) {
+    throw new Error('Error retrieving contact');
+  }
+};
+
+export default { getAllContacts, getContactById };
