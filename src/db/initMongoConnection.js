@@ -1,31 +1,33 @@
 // import mongoose from 'mongoose';
+// import dotenv from 'dotenv';
 
-// async function initMongoConnection() {
-//   const { MONGODB_USER, MONGODB_PASSWORD, MONGODB_URL, MONGODB_DB } =
-//     process.env;
+// dotenv.config();
 
-//   const uri = `mongodb+srv://${MONGODB_USER}:${MONGODB_PASSWORD}@${MONGODB_URL}/${MONGODB_DB}?retryWrites=true&w=majority`;
-
+// const initMongoConnection = async () => {
 //   try {
-//     await mongoose.connect(uri);
-//     console.log('Mongo connection successfully established!');
+//     await mongoose.connect(process.env.MONGODB_URI);
+//     console.log('MongoDB connected...');
 //   } catch (error) {
-//     console.error('Failed to connect to MongoDB', error);
+//     console.error('MongoDB connection failed', error);
 //     process.exit(1);
 //   }
-// }
+// };
+
+// export default initMongoConnection;
 
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
+process.env.MONGODB_URI =
+  'mongodb+srv://thefeex:wuwera88@miami.fnzip.mongodb.net/miami?retryWrites=true&w=majority';
+
+console.log('MongoDB URI:', process.env.MONGODB_URI);
+
 const initMongoConnection = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(process.env.MONGODB_URI);
     console.log('MongoDB connected...');
   } catch (error) {
     console.error('MongoDB connection failed', error);
