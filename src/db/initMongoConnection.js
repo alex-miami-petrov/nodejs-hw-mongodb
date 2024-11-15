@@ -21,7 +21,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 process.env.MONGODB_URI =
-  'mongodb+srv://thefeex:wuwera88@miami.fnzip.mongodb.net/miami?retryWrites=true&w=majority';
+  'mongodb+srv://thefeex:miamipass@miami.fnzip.mongodb.net/miami?retryWrites=true&w=majority';
 
 console.log('MongoDB URI:', process.env.MONGODB_URI);
 
