@@ -20,14 +20,13 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-process.env.MONGODB_URI =
-  'mongodb+srv://thefeex:miamipass@miami.fnzip.mongodb.net/miami?retryWrites=true&w=majority';
+const DB_URI = process.env.MONGODB_URI;
 
-console.log('MongoDB URI:', process.env.MONGODB_URI);
+console.log('MongoDB URI:', DB_URI);
 
 const initMongoConnection = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI);
+    await mongoose.connect(DB_URI);
     console.log('MongoDB connected...');
   } catch (error) {
     console.error('MongoDB connection failed', error);
