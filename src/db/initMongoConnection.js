@@ -22,7 +22,7 @@ dotenv.config();
 
 const DB_URI = process.env.MONGODB_URI;
 
-console.log('MongoDB URI:', DB_URI);
+console.log('Loaded MongoDB URI:', process.env.MONGODB_URI);
 
 const initMongoConnection = async () => {
   try {
