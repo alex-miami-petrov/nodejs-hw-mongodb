@@ -45,4 +45,15 @@ const updateContact = async (contactId, payload, options = {}) => {
   };
 };
 
-export default { getAllContacts, getContactById, addContact, updateContact };
+const deleteContact = async (contactId) => {
+  const contact = await Contact.findOneAndDelete({ _id: contactId });
+  return contact;
+};
+
+export default {
+  getAllContacts,
+  getContactById,
+  addContact,
+  updateContact,
+  deleteContact,
+};
