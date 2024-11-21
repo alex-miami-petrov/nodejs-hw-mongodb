@@ -18,4 +18,31 @@ const getContactById = async (contactId) => {
   }
 };
 
-export default { getAllContacts, getContactById };
+const addContact = async (contactData) => {
+  try {
+    const newContact = await Contact.create(contactData);
+    return newContact;
+  } catch (error) {
+    throw new Error('Error creating contact');
+  }
+};
+
+const updateContact = async (contactId, payload, options = {}) => {
+  const updatedContact = await Contact.findOneAndUpdate(
+    { _id: contactId },
+    payload,
+    {
+      new: true,
+      runValidators: true,
+      ...options,
+    },
+  );
+
+  if (!updatedContact) return null;
+
+  return {
+    contact: updatedContact,
+  };
+};
+
+export default { getAllContacts, getContactById, addContact, updateContact };

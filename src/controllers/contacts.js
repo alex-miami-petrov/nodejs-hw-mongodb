@@ -24,3 +24,32 @@ export const getContactById = async (req, res) => {
     data: contact,
   });
 };
+
+export const createContact = async (req, res) => {
+  const contactData = req.body;
+  const newContact = await contactService.addContact(contactData);
+
+  res.status(201).json({
+    status: 201,
+    message: 'Successfully created a contact!',
+    data: newContact,
+  });
+};
+
+export const patchContact = async (req, res) => {
+  const { contactId } = req.params;
+  const updatedContact = await contactService.updateContact(
+    contactId,
+    req.body,
+  );
+
+  if (!updatedContact) {
+    throw new createHttpError.NotFound('Contact not found');
+  }
+
+  res.status(200).json({
+    status: 200,
+    message: `Successfully patched contact with id ${contactId}!`,
+    data: updatedContact,
+  });
+};
