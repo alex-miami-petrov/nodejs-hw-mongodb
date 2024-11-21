@@ -1,7 +1,42 @@
+// import express from 'express';
+// import cors from 'cors';
+// import pino from 'pino';
+// import contactController from './contactController.js';
+
+// const logger = pino();
+// const app = express();
+
+// app.use(cors());
+// app.use(express.json());
+
+// app.use((req, res, next) => {
+//   logger.info(`${req.method} ${req.url}`);
+//   next();
+// });
+
+// app.get('/contacts', contactController.getContacts);
+
+// app.get('/contacts/:contactId', contactController.getContactById);
+
+// app.use((req, res, next) => {
+//   res.status(404).json({ message: 'Not found' });
+// });
+
+// const setupServer = () => {
+//   const PORT = process.env.PORT || 3000;
+//   app.listen(PORT, () => {
+//     console.log(`Server is running on port ${PORT}`);
+//   });
+// };
+
+// export default setupServer;
+
 import express from 'express';
 import cors from 'cors';
 import pino from 'pino';
-import contactController from './contactController.js';
+import contactsRouter from './routers/contacts.js';
+import { notFoundHandler } from './middlewares/notFoundHandler.js';
+import { errorHandler } from './middlewares/errorHandler.js';
 
 const logger = pino();
 const app = express();
@@ -14,13 +49,11 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/contacts', contactController.getContacts);
+app.use('/contacts', contactsRouter);
 
-app.get('/contacts/:contactId', contactController.getContactById);
+app.use(notFoundHandler);
 
-app.use((req, res, next) => {
-  res.status(404).json({ message: 'Not found' });
-});
+app.use(errorHandler);
 
 const setupServer = () => {
   const PORT = process.env.PORT || 3000;

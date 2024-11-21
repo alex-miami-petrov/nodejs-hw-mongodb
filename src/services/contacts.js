@@ -1,4 +1,4 @@
-import Contact from '../contact.js';
+import Contact from '../models/contact.js';
 
 const getAllContacts = async () => {
   try {
@@ -18,4 +18,42 @@ const getContactById = async (contactId) => {
   }
 };
 
-export default { getAllContacts, getContactById };
+const addContact = async (contactData) => {
+  try {
+    const newContact = await Contact.create(contactData);
+    return newContact;
+  } catch (error) {
+    throw new Error('Error creating contact');
+  }
+};
+
+const updateContact = async (contactId, payload, options = {}) => {
+  const updatedContact = await Contact.findOneAndUpdate(
+    { _id: contactId },
+    payload,
+    {
+      new: true,
+      runValidators: true,
+      ...options,
+    },
+  );
+
+  if (!updatedContact) return null;
+
+  return {
+    contact: updatedContact,
+  };
+};
+
+const deleteContact = async (contactId) => {
+  const contact = await Contact.findOneAndDelete({ _id: contactId });
+  return contact;
+};
+
+export default {
+  getAllContacts,
+  getContactById,
+  addContact,
+  updateContact,
+  deleteContact,
+};
