@@ -9,6 +9,7 @@ import {
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 
 const router = express.Router();
+// const jsonParser = express.json();
 
 router.get('/', ctrlWrapper(getContactsCtrl));
 router.get('/:contactId', ctrlWrapper(getContactByIdCtrl));
