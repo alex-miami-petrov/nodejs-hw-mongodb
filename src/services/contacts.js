@@ -41,7 +41,7 @@ const updateContact = async (contactId, payload, options = {}) => {
   if (!updatedContact) return null;
 
   return {
-    contact: updatedContact,
+    updatedContact,
   };
 };
 
