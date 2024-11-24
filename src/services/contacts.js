@@ -40,9 +40,7 @@ const updateContact = async (contactId, payload, options = {}) => {
 
   if (!updatedContact) return null;
 
-  return {
-    updatedContact,
-  };
+  return updatedContact;
 };
 
 const deleteContact = async (contactId) => {
