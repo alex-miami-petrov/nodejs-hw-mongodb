@@ -15,18 +15,17 @@ const addContact = async (contactData) => {
   return newContact;
 };
 
-const updateContact = async (contactId, payload, options = {}) => {
+const updateContact = async (contactId, payload) => {
   const updatedContact = await Contact.findOneAndUpdate(
     { _id: contactId },
     payload,
     {
       new: true,
       runValidators: true,
-      ...options,
     },
   );
 
-  if (!updatedContact) return null;
+  // if (!updatedContact) return null;
 
   return updatedContact;
 };
