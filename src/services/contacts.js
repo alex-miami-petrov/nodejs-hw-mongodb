@@ -25,8 +25,6 @@ const updateContact = async (contactId, payload) => {
     },
   );
 
-  // if (!updatedContact) return null;
-
   return updatedContact;
 };
 
