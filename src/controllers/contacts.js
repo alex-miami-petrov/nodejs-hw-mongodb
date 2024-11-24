@@ -62,5 +62,5 @@ export const deleteContactCtrl = async (req, res) => {
     throw new createHttpError.NotFound('Contact not found');
   }
 
-  res.send({ status: 204, message: 'Contact successfuly deleted' });
+  res.send({ status: 204, message: 'Contact successfully deleted' });
 };
