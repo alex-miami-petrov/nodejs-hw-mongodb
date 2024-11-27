@@ -1,6 +1,6 @@
 import Contact from '../models/contact.js';
 
-const getAllContacts = async () => {
+const getAllContacts = async (page = 1, perPage = 10) => {
   const contacts = await Contact.find();
   return contacts;
 };
