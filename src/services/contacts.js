@@ -14,7 +14,7 @@ const getAllContacts = async ({ page, perPage }) => {
 
   const paginationData = calculatePaginationData(contactsCount, perPage, page);
   return {
-    data: contacts,
+    contacts,
     ...paginationData,
   };
 };
