@@ -6,7 +6,7 @@ export const contactSchema = Joi.object({
   name: stringField.required(),
   phoneNumber: stringField.required(),
   email: stringField,
-  isFavourite: Joi.boolean(),
+  isFavourite: Joi.boolean().default(false),
   contactType: stringField.valid('work', 'home', 'personal').required(),
 });
 
