@@ -10,7 +10,7 @@ export const validateBody = (schema) => {
       next(
         createHttpError(
           400,
-          JSON.stringify(error.details.map((err) => err.mesage)),
+          error.details.map((err) => err.message).join('; '),
         ),
       );
     }

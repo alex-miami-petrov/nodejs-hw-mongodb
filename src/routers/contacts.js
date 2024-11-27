@@ -17,12 +17,12 @@ const router = express.Router();
 router.get('/', ctrlWrapper(getContactsCtrl));
 router.get('/:contactId', isValidId, ctrlWrapper(getContactByIdCtrl));
 router.post('/', validateBody(contactSchema), ctrlWrapper(createContactCtrl));
-router.patch('/:contactId', isValidId, ctrlWrapper(patchContactCtrl));
-router.delete(
+router.patch(
   '/:contactId',
   isValidId,
   validateBody(editContactSchema),
-  ctrlWrapper(deleteContactCtrl),
+  ctrlWrapper(patchContactCtrl),
 );
+router.delete('/:contactId', isValidId, ctrlWrapper(deleteContactCtrl));
 
 export default router;
