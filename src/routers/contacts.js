@@ -16,7 +16,11 @@ const router = express.Router();
 
 router.get('/', ctrlWrapper(getContactsCtrl));
 router.get('/:contactId', isValidId, ctrlWrapper(getContactByIdCtrl));
-router.post('/', validateBody(contactSchema), ctrlWrapper(createContactCtrl));
+router.post(
+  '/register',
+  validateBody(contactSchema),
+  ctrlWrapper(createContactCtrl),
+);
 router.patch(
   '/:contactId',
   isValidId,

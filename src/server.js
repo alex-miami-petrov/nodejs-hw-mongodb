@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import pino from 'pino';
-import contactsRouter from './routers/contacts.js';
+import router from './routers/index.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 
@@ -16,7 +16,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/contacts', contactsRouter);
+app.use(router);
 
 app.use(notFoundHandler);
 
