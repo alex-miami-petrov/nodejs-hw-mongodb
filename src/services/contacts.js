@@ -12,7 +12,7 @@ const getAllContacts = async ({
   const limit = perPage;
   const skip = page > 0 ? (page - 1) * perPage : 0;
 
-  const contactsQuery = Contact.find();
+  const contactsQuery = Contact.find(filter);
 
   if (filter.name) {
     contactsQuery.where('name').regex(new RegExp(filter.name, 'i'));
@@ -55,8 +55,8 @@ const getAllContacts = async ({
   };
 };
 
-const getContactById = async (contactId) => {
-  const contact = await Contact.findById(contactId);
+const getContactById = async (contactId, userId) => {
+  const contact = await Contact.findById({ _id: contactId, userId });
   return contact;
 };
 
@@ -65,9 +65,9 @@ const addContact = async (contactData) => {
   return newContact;
 };
 
-const updateContact = async (contactId, payload) => {
+const updateContact = async (contactId, payload, userId) => {
   const updatedContact = await Contact.findOneAndUpdate(
-    { _id: contactId },
+    { _id: contactId, userId },
     payload,
     {
       new: true,
@@ -78,8 +78,8 @@ const updateContact = async (contactId, payload) => {
   return updatedContact;
 };
 
-const deleteContact = async (contactId) => {
-  const contact = await Contact.findOneAndDelete({ _id: contactId });
+const deleteContact = async (contactId, userId) => {
+  const contact = await Contact.findOneAndDelete({ _id: contactId, userId });
   return contact;
 };
 
