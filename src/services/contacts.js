@@ -56,7 +56,7 @@ const getAllContacts = async ({
 };
 
 const getContactById = async (contactId, userId) => {
-  const contact = await Contact.findById({ _id: contactId, userId });
+  const contact = await Contact.findOne({ _id: contactId, userId });
   return contact;
 };
 
