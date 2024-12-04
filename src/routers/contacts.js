@@ -18,6 +18,7 @@ router.use(authenticate);
 
 router.get('/', ctrlWrapper(getContactsCtrl));
 router.get('/:contactId', isValidId, ctrlWrapper(getContactByIdCtrl));
+router.post('/', validateBody(contactSchema), ctrlWrapper(createContactCtrl));
 router.post(
   '/register',
   validateBody(contactSchema),
