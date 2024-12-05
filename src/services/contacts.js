@@ -2,6 +2,12 @@ import { SORT_ORDER } from '../constans/index.js';
 import Contact from '../models/contact.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 
+const clearFilter = (filter) => {
+  return Object.fromEntries(
+    Object.entries(filter).filter(([_, value]) => value !== undefined),
+  );
+};
+
 const getAllContacts = async ({
   page = 1,
   perPage = 10,
@@ -12,32 +18,27 @@ const getAllContacts = async ({
   const limit = perPage;
   const skip = page > 0 ? (page - 1) * perPage : 0;
 
-  const contactsQuery = Contact.find(filter);
+  const cleanedFilter = clearFilter(filter);
 
-  if (filter.name) {
-    contactsQuery.where('name').regex(new RegExp(filter.name, 'i'));
-  }
-  if (filter.phoneNumber) {
-    contactsQuery.where('phoneNumber').regex(new RegExp(filter.phoneNumber));
-  }
-  if (filter.email) {
-    contactsQuery.where('email').regex(new RegExp(filter.email, 'i'));
-  }
-  if (filter.isFavourite !== undefined) {
-    contactsQuery.where('isFavourite').equals(filter.isFavourite);
-  }
-  if (filter.contactType) {
-    contactsQuery.where('contactType').equals(filter.contactType);
-  }
-  // const contactsCount = await Contact.find()
-  //   .merge(contactsQuery)
-  //   .countDocuments();
+  const contactsQuery = Contact.find(cleanedFilter);
 
-  // const contacts = await contactsQuery
-  //   .skip(skip)
-  //   .limit(limit)
-  //   .sort({ [sortBy]: sortOrder })
-  //   .exec();
+  if (cleanedFilter.name) {
+    contactsQuery.where('name').regex(new RegExp(cleanedFilter.name, 'i'));
+  }
+  if (cleanedFilter.phoneNumber) {
+    contactsQuery
+      .where('phoneNumber')
+      .regex(new RegExp(cleanedFilter.phoneNumber));
+  }
+  if (cleanedFilter.email) {
+    contactsQuery.where('email').regex(new RegExp(cleanedFilter.email, 'i'));
+  }
+  if (cleanedFilter.isFavourite !== undefined) {
+    contactsQuery.where('isFavourite').equals(cleanedFilter.isFavourite);
+  }
+  if (cleanedFilter.contactType) {
+    contactsQuery.where('contactType').equals(cleanedFilter.contactType);
+  }
 
   const [contactsCount, contacts] = await Promise.all([
     Contact.find().merge(contactsQuery).countDocuments(),
