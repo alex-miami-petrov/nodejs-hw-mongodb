@@ -1,3 +1,4 @@
+// import createHttpError from 'http-errors';
 import { SORT_ORDER } from '../constans/index.js';
 import Contact from '../models/contact.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
@@ -14,6 +15,7 @@ const getAllContacts = async ({
   sortOrder = SORT_ORDER.ASC,
   sortBy = '_id',
   filter = {},
+  // userId, - тоді прибираємо clearFilter
 }) => {
   const limit = perPage;
   const skip = page > 0 ? (page - 1) * perPage : 0;
@@ -39,6 +41,10 @@ const getAllContacts = async ({
   if (cleanedFilter.contactType) {
     contactsQuery.where('contactType').equals(cleanedFilter.contactType);
   }
+
+  // if (contact.userId.toString() !== req.user.id.toString()) {
+  //   throw new createHttpError.Forbidden("Contact forbidden")
+  // }
 
   const [contactsCount, contacts] = await Promise.all([
     Contact.find().merge(contactsQuery).countDocuments(),
