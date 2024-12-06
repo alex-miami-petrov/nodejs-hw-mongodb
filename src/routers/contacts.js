@@ -1,4 +1,4 @@
-import express from 'express';
+import { Router } from 'express';
 import {
   getContactsCtrl,
   getContactByIdCtrl,
@@ -12,7 +12,7 @@ import { validateBody } from '../middlewares/validateBody.js';
 import { contactSchema, editContactSchema } from '../validation/contact.js';
 import { authenticate } from '../middlewares/authenticate.js';
 
-const router = express.Router();
+const router = Router();
 router.use(authenticate);
 // const jsonParser = express.json();
 
