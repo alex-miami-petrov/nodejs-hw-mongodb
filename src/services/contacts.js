@@ -2,11 +2,11 @@ import { SORT_ORDER } from '../constans/index.js';
 import Contact from '../models/contact.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 
-const clearFilter = (filter) => {
-  return Object.fromEntries(
-    Object.entries(filter).filter(([_, value]) => value !== undefined),
-  );
-};
+// const clearFilter = (filter) => {
+//   return Object.fromEntries(
+//     Object.entries(filter).filter(([_, value]) => value !== undefined),
+//   );
+// };
 
 const getAllContacts = async ({
   page = 1,
@@ -14,31 +14,26 @@ const getAllContacts = async ({
   sortOrder = SORT_ORDER.ASC,
   sortBy = '_id',
   filter = {},
-  // userId, - тоді прибираємо clearFilter
 }) => {
   const limit = perPage;
   const skip = page > 0 ? (page - 1) * perPage : 0;
 
-  const cleanedFilter = clearFilter(filter);
+  const contactsQuery = Contact.find({ userId: filter.userId });
 
-  const contactsQuery = Contact.find(cleanedFilter);
-
-  if (cleanedFilter.name) {
-    contactsQuery.where('name').regex(new RegExp(cleanedFilter.name, 'i'));
+  if (filter.name) {
+    contactsQuery.where('name').equals(filter.name);
   }
-  if (cleanedFilter.phoneNumber) {
-    contactsQuery
-      .where('phoneNumber')
-      .regex(new RegExp(cleanedFilter.phoneNumber));
+  if (filter.phoneNumber) {
+    contactsQuery.where('phoneNumber').regex(new RegExp(filter.phoneNumber));
   }
-  if (cleanedFilter.email) {
-    contactsQuery.where('email').regex(new RegExp(cleanedFilter.email, 'i'));
+  if (filter.email) {
+    contactsQuery.where('email').regex(new RegExp(filter.email, 'i'));
   }
-  if (cleanedFilter.isFavourite !== undefined) {
-    contactsQuery.where('isFavourite').equals(cleanedFilter.isFavourite);
+  if (filter.isFavourite !== undefined) {
+    contactsQuery.where('isFavourite').equals(filter.isFavourite);
   }
-  if (cleanedFilter.contactType) {
-    contactsQuery.where('contactType').equals(cleanedFilter.contactType);
+  if (filter.contactType) {
+    contactsQuery.where('contactType').equals(filter.contactType);
   }
 
   const [contactsCount, contacts] = await Promise.all([
