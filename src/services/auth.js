@@ -93,6 +93,7 @@ export const requestResetToken = async (email) => {
     subject: 'Reset your password',
     html: `<p>Click <a href="${resetToken}">here</a> to reset your password!</p>`,
   }).catch((error) => {
+    console.error('Email sending error:', error);
     throw createHttpError(
       500,
       'Failed to send the email, please try again later.',
@@ -116,7 +117,7 @@ export const resetPassword = async (payload) => {
   });
 
   if (!user) {
-    throw createHttpError(44, 'User not found');
+    throw createHttpError(404, 'User not found');
   }
 
   const encryptedPassword = await bcrypt.hash(payload.password, 10);
