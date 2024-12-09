@@ -4,6 +4,8 @@ import bcrypt from 'bcrypt';
 import { randomBytes } from 'crypto';
 import { Session } from '../models/session.js';
 import { FIFTEEN_MINUTES, ONE_DAY } from '../constans/index.js';
+import jwt from 'jsonwebtoken';
+import { sendEmail } from '../utils/sendMail.js';
 
 export const registerUser = async (payload) => {
   const user = await User.findOne({ email: payload.email });
@@ -73,4 +75,27 @@ export const requestResetToken = async (email) => {
   if (!user) {
     throw createHttpError(404, 'User not found');
   }
+
+  const resetToken = jwt.sign(
+    {
+      sub: user._id,
+      email,
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: '5m',
+    },
+  );
+
+  await sendEmail({
+    from: process.env.SMTP_FROM,
+    to: email,
+    subject: 'Reset your password',
+    html: `<p>Click <a href="${resetToken}">here</a> to reset your password!</p>`,
+  }).catch((error) => {
+    throw createHttpError(
+      500,
+      'Failed to send the email, please try again later.',
+    );
+  });
 };
