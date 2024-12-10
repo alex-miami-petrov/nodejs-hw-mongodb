@@ -12,6 +12,7 @@ export const contactSchema = Joi.object({
 
 export const editContactSchema = Joi.object({
   name: stringField,
+  // photo: stringField,
   phoneNumber: stringField,
   email: stringField,
   isFavourite: Joi.boolean(),

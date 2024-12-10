@@ -3,6 +3,8 @@ import createHttpError from 'http-errors';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parseSortParams.js';
 import { parseContactFilterParams } from '../utils/parseFilterParams.js';
+import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
+import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 
 export const getContactsCtrl = async (req, res) => {
   const { page, perPage } = parsePaginationParams(req.query);
@@ -54,18 +56,42 @@ export const createContactCtrl = async (req, res) => {
   });
 };
 
-export const patchContactCtrl = async (req, res) => {
+export const patchContactCtrl = async (req, res, next) => {
   const { contactId } = req.params;
   const photo = req.file;
 
+  let photoUrl;
+
+  if (photo) {
+    if (process.env.ENABLE_CLOUDINARY === 'true') {
+      photoUrl = await saveFileToCloudinary(photo);
+    } else {
+      photoUrl = await saveFileToUploadDir(photo);
+    }
+  }
+
+  // const updatedContact = await contactService.updateContact(
+  //   contactId,
+  //   req.body,
+  //   req.user._id,
+  // );
+
+  // if (!updatedContact) {
+  //   throw new createHttpError.NotFound('Contact not found');
+  // }
+
   const updatedContact = await contactService.updateContact(
     contactId,
-    req.body,
+    {
+      ...req.body,
+      photo: photoUrl,
+    },
     req.user._id,
   );
 
   if (!updatedContact) {
-    throw new createHttpError.NotFound('Contact not found');
+    next(createHttpError(404, 'Student not found'));
+    return;
   }
 
   res.status(200).json({
