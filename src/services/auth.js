@@ -3,9 +3,12 @@ import { User } from '../models/user.js';
 import bcrypt from 'bcrypt';
 import { randomBytes } from 'crypto';
 import { Session } from '../models/session.js';
-import { FIFTEEN_MINUTES, ONE_DAY } from '../constans/index.js';
+import { FIFTEEN_MINUTES, ONE_DAY, TEMPLATES_DIR } from '../constans/index.js';
 import jwt from 'jsonwebtoken';
 import { sendEmail } from '../utils/sendMail.js';
+import handlebars from 'handlebars';
+import path from 'node:path';
+import fs from 'node:fs/promises';
 
 export const registerUser = async (payload) => {
   const user = await User.findOne({ email: payload.email });
@@ -87,11 +90,25 @@ export const requestResetToken = async (email) => {
     },
   );
 
+  const resetPasswordTemplate = path.join(
+    TEMPLATES_DIR,
+    'reset-password-email.html',
+  );
+
+  const templateSource = (await fs.readFile(resetPasswordTemplate)).toString();
+
+  const template = handlebars.compile(templateSource);
+
+  const html = template({
+    name: user.name,
+    link: `${process.env.APP_DOMAIN}/reset-password?token=${resetToken}`,
+  });
+
   await sendEmail({
     from: process.env.SMTP_FROM,
     to: email,
     subject: 'Reset your password',
-    html: `<p>Click <a href="${resetToken}">here</a> to reset your password!</p>`,
+    html,
   }).catch((error) => {
     console.error('Email sending error:', error);
     throw createHttpError(
