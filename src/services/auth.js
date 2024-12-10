@@ -140,4 +140,6 @@ export const resetPassword = async (payload) => {
   const encryptedPassword = await bcrypt.hash(payload.password, 10);
 
   await User.updateOne({ _id: user._id }, { password: encryptedPassword });
+
+  await Session.deleteMany({ userId: user._id });
 };
