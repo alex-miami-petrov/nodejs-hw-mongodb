@@ -56,6 +56,8 @@ export const createContactCtrl = async (req, res) => {
 
 export const patchContactCtrl = async (req, res) => {
   const { contactId } = req.params;
+  const photo = req.file;
+
   const updatedContact = await contactService.updateContact(
     contactId,
     req.body,
