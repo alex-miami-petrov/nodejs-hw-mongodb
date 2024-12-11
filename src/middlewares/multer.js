@@ -3,6 +3,7 @@ import { TEMP_UPLOAD_DIR } from '../constans/index.js';
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
+    console.log('Received file:', file.originalname);
     cb(null, TEMP_UPLOAD_DIR);
   },
   filename: function (req, file, cb) {
