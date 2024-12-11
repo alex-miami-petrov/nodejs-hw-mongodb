@@ -47,7 +47,22 @@ export const getContactByIdCtrl = async (req, res) => {
 
 export const createContactCtrl = async (req, res) => {
   const contactData = { ...req.body, userId: req.user._id };
-  const newContact = await contactService.addContact(contactData);
+  const photo = req.file;
+
+  let photoUrl;
+
+  if (photo) {
+    if (process.env.ENABLE_CLOUDINARY === 'true') {
+      photoUrl = await saveFileToCloudinary(photo);
+    } else {
+      photoUrl = await saveFileToUploadDir(photo);
+    }
+  }
+
+  const newContact = await contactService.addContact({
+    ...contactData,
+    photo: photoUrl,
+  });
 
   res.status(201).json({
     status: 201,
