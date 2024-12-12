@@ -82,7 +82,7 @@ export const requestResetToken = async (email) => {
   const resetToken = jwt.sign(
     {
       sub: user._id,
-      email,
+      email: user.email,
     },
     process.env.JWT_SECRET,
     {
@@ -124,7 +124,11 @@ export const resetPassword = async (payload) => {
   try {
     entries = jwt.verify(payload.token, process.env.JWT_SECRET);
   } catch (error) {
-    if (error instanceof Error) throw createHttpError(401, error.message);
+    // if (error instanceof Error) throw createHttpError(401, error.message);
+    // throw error;
+    if (error.name === 'JsonWebToken' || error.name === 'TokenExpiredError') {
+      throw createHttpError(401, 'Token error');
+    }
     throw error;
   }
 
