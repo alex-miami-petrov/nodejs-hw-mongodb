@@ -5,6 +5,7 @@ import {
   loginUserSchema,
   requestResetEmailSchema,
   resetPasswordSchema,
+  confirmAuthSchema,
 } from '../validation/auth.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import {
@@ -14,6 +15,8 @@ import {
   logoutUserCtrl,
   requestResetEmailCtrl,
   resetPasswordCtrl,
+  getAuthUrlCtrl,
+  confirmAuthCtrl,
 } from '../controllers/auth.js';
 
 const router = Router();
@@ -44,6 +47,14 @@ router.post(
   '/reset-pwd',
   validateBody(resetPasswordSchema),
   ctrlWrapper(resetPasswordCtrl),
+);
+
+router.get('/get-oauth-url', ctrlWrapper(getAuthUrlCtrl));
+
+router.post(
+  '/confirm-oauth',
+  validateBody(confirmAuthSchema),
+  ctrlWrapper(confirmAuthCtrl),
 );
 
 export default router;

@@ -147,3 +147,60 @@ export const resetPassword = async (payload) => {
 
   await Session.deleteMany({ userId: user._id });
 };
+
+export const loginOrRegister = async (payload) => {
+  const user = await User.findOne({ email: payload.email });
+
+  if (!user) {
+    const password = await bcrypt.hash(
+      crypto.randomBytes(30).toString('base64'),
+    );
+
+    const createdUser = await User.create({
+      name: payload.name,
+      email: payload.email,
+      password,
+    });
+  }
+
+  return await Session.create({
+    userId: createdUser.userId,
+    accessToken: randomBytes(30).toString('base64'),
+    refreshToken: randomBytes(30).toString('base64'),
+    accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
+    refreshTokenValidUntil: new Date(Date.now() + ONE_DAY),
+  });
+
+  await Session.deleteOne({ userId: user._id });
+
+  return await Session.create({
+    userId: user.userId,
+    accessToken: randomBytes(30).toString('base64'),
+    refreshToken: randomBytes(30).toString('base64'),
+    accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
+    refreshTokenValidUntil: new Date(Date.now() + ONE_DAY),
+  });
+};
+
+// export const loginOrRegister = async (payload) => {
+//   let user = await User.findOne({ email: payload.email });
+
+//   if (!user) {
+//     const password = await bcrypt.hash(randomBytes(30).toString('base64'), 10);
+
+//     user = await User.create({
+//       name: payload.name,
+//       email: payload.email,
+//       password,
+//     });
+//   }
+
+//   const existingSession = await Session.findOne({ userId: user._id });
+
+//   if (existingSession) {
+
+//     await Session.deleteOne({ _id: existingSession._id });
+//   }
+
+//   return await createSession(user._id);
+// };
