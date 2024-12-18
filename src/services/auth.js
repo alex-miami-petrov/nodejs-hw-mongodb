@@ -149,58 +149,63 @@ export const resetPassword = async (payload) => {
 };
 
 export const loginOrRegister = async (payload) => {
-  const user = await User.findOne({ email: payload.email });
+  let user = await User.findOne({ email: payload.email });
+
+  let createdUser;
 
   if (!user) {
-    const password = await bcrypt.hash(
-      crypto.randomBytes(30).toString('base64'),
-    );
+    const password = await bcrypt.hash(randomBytes(30).toString('base64'), 10);
 
-    const createdUser = await User.create({
+    createdUser = await User.create({
       name: payload.name,
       email: payload.email,
       password,
     });
+  } else {
+    createdUser = user;
   }
 
-  return await Session.create({
-    userId: createdUser.userId,
+  let existingSession = await Session.findOne({ userId: createdUser._id });
+
+  if (existingSession) {
+    await Session.deleteOne({ _id: existingSession._id });
+  }
+
+  const session = await Session.create({
+    userId: createdUser._id,
     accessToken: randomBytes(30).toString('base64'),
     refreshToken: randomBytes(30).toString('base64'),
     accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
     refreshTokenValidUntil: new Date(Date.now() + ONE_DAY),
   });
 
-  await Session.deleteOne({ userId: user._id });
-
-  return await Session.create({
-    userId: user.userId,
-    accessToken: randomBytes(30).toString('base64'),
-    refreshToken: randomBytes(30).toString('base64'),
-    accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
-    refreshTokenValidUntil: new Date(Date.now() + ONE_DAY),
-  });
+  return session;
 };
 
 // export const loginOrRegister = async (payload) => {
 //   let user = await User.findOne({ email: payload.email });
 
+//   let createdUser;
+
 //   if (!user) {
 //     const password = await bcrypt.hash(randomBytes(30).toString('base64'), 10);
 
-//     user = await User.create({
+//     createdUser = await User.create({
 //       name: payload.name,
 //       email: payload.email,
 //       password,
 //     });
+//   } else {
+//     createdUser = user;
 //   }
 
-//   const existingSession = await Session.findOne({ userId: user._id });
+//   const session = await Session.create({
+//     userId: createdUser._id,
+//     accessToken: randomBytes(30).toString('base64'),
+//     refreshToken: randomBytes(30).toString('base64'),
+//     accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
+//     refreshTokenValidUntil: new Date(Date.now() + ONE_DAY),
+//   });
 
-//   if (existingSession) {
-
-//     await Session.deleteOne({ _id: existingSession._id });
-//   }
-
-//   return await createSession(user._id);
+//   return session;
 // };
