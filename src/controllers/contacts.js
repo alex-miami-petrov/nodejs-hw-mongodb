@@ -105,13 +105,13 @@ export const patchContactCtrl = async (req, res, next) => {
   );
 
   if (!updatedContact) {
-    next(createHttpError(404, 'Student not found'));
+    next(createHttpError(404, 'Contact not found'));
     return;
   }
 
   res.status(200).json({
     status: 200,
-    message: `Successfully patched contact with id ${contactId}!`,
+    message: `Successfully updated the contact!`,
     data: updatedContact,
   });
 };
