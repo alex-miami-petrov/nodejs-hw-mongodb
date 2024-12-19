@@ -1,0 +1,13 @@
+ 
+      tags:
+        - Authentication
+        summary: Logout user
+        # operationId: Logout
+      description: Logout the user and invalidate their session.
+      responses:
+        '204':
+          description: Successfully logged out user
+        '404':
+          description: User not found
+        '500':
+          description: Internal server error

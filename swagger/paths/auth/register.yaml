@@ -1,0 +1,49 @@
+tags:
+  - Authentication
+summary: Register a new user
+# operationId: Register
+description: Create a new user account.
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - name
+          - email
+          - password
+        properties:
+          name:
+            type: string
+            description: User's full name
+            example: John Doe
+          email:
+            type: string
+            format: email
+            description: User's email address
+            example: john.doe@example.com
+          password:
+            type: string
+            description: User's password
+            example: 'P@ssw0rd123'
+responses:
+  '201':
+    description: Successfully registered user
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully registered user!
+            data:
+              type: object
+  '409':
+    description: Email in use
+  '500':
+    description: Internal server error
