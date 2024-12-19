@@ -1,7 +1,7 @@
 tags:
   - Auth
 summary: Refresh access token
-operationId: Refresh
+operationId: refreshToken
 description: Refresh the user's access token using the refresh token.
 responses:
   '200':

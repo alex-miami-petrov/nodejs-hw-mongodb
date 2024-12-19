@@ -1,6 +1,7 @@
 tags:
   - Auth
 summary: Logout user
+operationId: logout
 description: Logout the user and invalidate their session.
 responses:
   '204':

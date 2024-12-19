@@ -1,7 +1,7 @@
 tags:
   - Auth
 summary: Register a new user
-# operationId: Register
+operationId: register
 description: Create a new user account.
 requestBody:
   required: true
@@ -44,6 +44,6 @@ responses:
             data:
               type: object
   '409':
-    description: Email in use
+    description: Email already in use
   '500':
     description: Internal server error

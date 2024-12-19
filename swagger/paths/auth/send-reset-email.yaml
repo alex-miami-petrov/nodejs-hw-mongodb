@@ -1,6 +1,7 @@
 tags:
   - Auth
 summary: Request password reset email
+operationId: sendResetEmail
 description: Send an email with a link to reset the user's password.
 requestBody:
   required: true

@@ -1,6 +1,7 @@
 tags:
   - Auth
 summary: Get Google OAuth URL
+operationId: getAuthUrl
 description: Retrieve the URL for Google OAuth authentication.
 responses:
   '200':

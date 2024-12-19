@@ -1,6 +1,7 @@
 tags:
   - Auth
 summary: Login user
+operationId: login
 description: Authenticate a user and return an access token.
 requestBody:
   required: true

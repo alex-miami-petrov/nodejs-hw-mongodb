@@ -1,6 +1,7 @@
 tags:
   - Auth
 summary: Confirm Google OAuth
+operationId: confirmAuth
 description: Confirm the Google OAuth code and login/register the user.
 requestBody:
   required: true
