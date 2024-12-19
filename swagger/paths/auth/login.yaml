@@ -2,7 +2,9 @@ tags:
   - Auth
 summary: Login user
 operationId: login
-description: Authenticate a user and return an access token.
+description: Authenticate a user and return an access token
+security:
+  - bearerAuth: []
 requestBody:
   required: true
   content:

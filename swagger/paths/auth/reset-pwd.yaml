@@ -3,6 +3,8 @@ tags:
 summary: Reset password
 operationId: resetPassword
 description: Reset the user's password using the provided token.
+security:
+  - bearerAuth: []
 requestBody:
   required: true
   content:

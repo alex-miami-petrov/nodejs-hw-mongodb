@@ -3,6 +3,8 @@ tags:
 summary: Register a new user
 operationId: register
 description: Create a new user account.
+security:
+  - bearerAuth: []
 requestBody:
   required: true
   content:
