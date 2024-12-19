@@ -7,7 +7,6 @@ import { errorHandler } from './middlewares/errorHandler.js';
 import cookieParser from 'cookie-parser';
 import { UPLOAD_DIR } from './constans/index.js';
 import { swaggerDocs } from './middlewares/swaggerDocs.js';
-import path from 'path';
 
 const logger = pino();
 const app = express();

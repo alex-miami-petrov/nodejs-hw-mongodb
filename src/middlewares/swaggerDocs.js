@@ -1,6 +1,7 @@
 import createHttpError from 'http-errors';
 import swaggerUI from 'swagger-ui-express';
 import fs from 'fs';
+import path from 'path';
 
 export const swaggerDocs = () => {
   try {

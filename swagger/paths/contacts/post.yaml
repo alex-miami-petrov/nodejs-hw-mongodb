@@ -23,7 +23,8 @@ requestBody:
             description: The phone number of the contact
           contactType:
             type: string
-            description: The type of contact (e.g., personal, work)
+            description: The type of contact
+            enum: ['work', 'home', 'personal']
           email:
             description: "Contact's email"
             type: string
