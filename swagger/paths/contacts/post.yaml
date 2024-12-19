@@ -12,31 +12,28 @@ requestBody:
         type: object
         required:
           - name
-  - phoneNumber
-  - contactType
+          - phoneNumber
+          - contactType
         properties:
-      name:
-    description: "Contact's name"
-    type: string
-    example: 'John Doe'
-  phoneNumber:
-    description: "Contacts's phone number"
-    type: number
-    example: 380678345590
-  contactType:
-    description: "Contacts's type"
-    type: string
-    enum: ['work', 'home', 'personal']
-  email:
-    description: "Contact's email"
-    type: string
-    example: mia@ukr.net
-  isFavourite:
-    description: 'Whether is contact is favourite'
-    type: boolean
-    example: false
+          name:
+            type: string
+            description: The name of the contact
+          phoneNumber:
+            type: string
+            description: The phone number of the contact
+          contactType:
+            type: string
+            description: The type of contact (e.g., personal, work)
+          email:
+            description: "Contact's email"
+            type: string
+            example: mia@ukr.net
+          isFavourite:
+            description: 'Whether the contact is favourite'
+            type: boolean
+            example: false
           photo:
-            description: "contact's photo"
+            description: "Contact's photo"
             type: string
             format: binary
 responses:

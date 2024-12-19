@@ -1,5 +1,5 @@
 tags:
-  - Authentication
+  - Auth
 summary: Register a new user
 # operationId: Register
 description: Create a new user account.
