@@ -5,14 +5,19 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  description: <опис вашого додатку>
+  description: This is a documentation of Contacts app
 tags:
-  # теги, що ви будете використовувати
+   - name: Contacts
+    description: Operations about contacts.
+  - name: Auth
+    description: Auth operations.
 servers:
   - url: http://localhost:3000
   - url: https://nodejs-hw-mongodb-4vnp.onrender.com
 paths:
-  # тут будуть посилання на ендпоінти
+  /contacts/{id}:
+    get:
+      $ref: ../swagger/paths/contacts/{id}/get.yaml
 components:
   securitySchemes:
     bearerAuth:
