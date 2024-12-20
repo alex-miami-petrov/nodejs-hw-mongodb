@@ -606,8 +606,45 @@
               }
             }
           },
+          "400": {
+            "description": "Validation error (e.g., missing required fields)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Name, email, and password are required."
+                    }
+                  }
+                }
+              }
+            }
+          },
           "409": {
-            "description": "Email already in use"
+            "description": "Email already in use",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 409
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Email is already in use."
+                    }
+                  }
+                }
+              }
+            }
           },
           "500": {
             "$ref": "#/components/responses/500"
@@ -755,7 +792,7 @@
         ],
         "summary": "Logout user",
         "operationId": "logout",
-        "description": "Logout the user and invalidate their session",
+        "description": "Logout the user and invalidate their session.",
         "security": [
           {
             "bearerAuth": []
@@ -763,10 +800,47 @@
         ],
         "responses": {
           "204": {
-            "description": "Successfully logged out user"
+            "description": "Successfully logged out user. No content is returned."
+          },
+          "401": {
+            "description": "Authentication required or invalid token.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid or missing authentication token."
+                    }
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "description": "User not found"
+            "description": "User not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "User session not found."
+                    }
+                  }
+                }
+              }
+            }
           },
           "500": {
             "$ref": "#/components/responses/500"
@@ -830,7 +904,24 @@
             }
           },
           "400": {
-            "description": "Invalid email address"
+            "description": "Invalid email address",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid email address provided."
+                    }
+                  }
+                }
+              }
+            }
           },
           "500": {
             "$ref": "#/components/responses/500"
@@ -902,7 +993,24 @@
             "$ref": "#/components/responses/401"
           },
           "404": {
-            "description": "User not found"
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "User not found."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -914,12 +1022,8 @@
         ],
         "summary": "Get Google OAuth URL",
         "operationId": "getAuthUrl",
-        "description": "Retrieve the URL for Google OAuth authentication",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "description": "Retrieve the URL for Google OAuth authentication.",
+        "security": [],
         "responses": {
           "200": {
             "description": "Successfully retrieved OAuth URL",
@@ -927,6 +1031,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -934,7 +1043,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully get Google OAuth url"
+                      "example": "Successfully retrieved Google OAuth URL."
                     },
                     "data": {
                       "type": "string",
@@ -946,8 +1055,28 @@
               }
             }
           },
-          "404": {
-            "description": "Internal server error"
+          "400": {
+            "description": "Missing or invalid configuration for Google OAuth.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Missing required Google OAuth configuration."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }

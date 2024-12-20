@@ -35,5 +35,16 @@ responses:
               example: Reset password email was successfully sent!
   '400':
     description: Invalid email address
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 400
+            message:
+              type: string
+              example: Invalid email address provided.
   '500':
     $ref: '../../components/responses/500.yaml'

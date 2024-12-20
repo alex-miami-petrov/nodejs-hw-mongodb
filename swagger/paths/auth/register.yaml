@@ -47,5 +47,29 @@ responses:
               type: object
   '409':
     description: Email already in use
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 409
+            message:
+              type: string
+              example: Email is already in use.
+  '400':
+    description: Validation error (e.g., missing required fields)
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 400
+            message:
+              type: string
+              example: Name, email, and password are required.
   '500':
     $ref: '../../components/responses/500.yaml'

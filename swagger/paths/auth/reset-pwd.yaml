@@ -41,3 +41,14 @@ responses:
     $ref: '../../components/responses/401.yaml'
   '404':
     description: User not found
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            success:
+              type: boolean
+              example: false
+            error:
+              type: string
+              example: 'User not found.'
