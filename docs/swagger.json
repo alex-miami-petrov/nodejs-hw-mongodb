@@ -35,7 +35,7 @@
         ],
         "summary": "Get list of contacts",
         "operationId": "getContacts",
-        "description": "Get list of contacts with this endpoint",
+        "description": "Retrieve a filtered and paginated list of contacts.",
         "security": [
           {
             "bearerAuth": []
@@ -44,53 +44,77 @@
         "parameters": [
           {
             "in": "query",
+            "name": "name",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by contact name (partial match supported).",
+            "example": "John"
+          },
+          {
+            "in": "query",
+            "name": "phoneNumber",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by contact phone number.",
+            "example": "380678345590"
+          },
+          {
+            "in": "query",
+            "name": "email",
+            "schema": {
+              "type": "string",
+              "format": "email"
+            },
+            "description": "Filter by contact email address.",
+            "example": "john.doe@example.com"
+          },
+          {
+            "in": "query",
+            "name": "isFavourite",
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "Filter by whether the contact is marked as favourite.",
+            "example": true
+          },
+          {
+            "in": "query",
+            "name": "contactType",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "work",
+                "home",
+                "personal"
+              ]
+            },
+            "description": "Filter by contact type.",
+            "example": "work"
+          },
+          {
+            "in": "query",
             "name": "page",
             "schema": {
               "type": "integer"
             },
+            "description": "Page number for pagination.",
             "example": 1
           },
           {
             "in": "query",
             "name": "perPage",
             "schema": {
-              "type": "integer",
-              "example": 10
-            }
-          },
-          {
-            "in": "query",
-            "name": "sortBy",
-            "schema": {
-              "type": "string",
-              "example": "name"
+              "type": "integer"
             },
-            "description": "All contacts' fields can be mentioned. Default value - _id"
-          },
-          {
-            "in": "query",
-            "name": "sortOrder",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "asc",
-                "desc"
-              ],
-              "example": "asc"
-            }
-          },
-          {
-            "in": "query",
-            "name": "isFavourite",
-            "schema": {
-              "type": "boolean",
-              "example": true
-            }
+            "description": "Number of items per page.",
+            "example": 10
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully found contacts!",
+            "description": "Successfully retrieved filtered and paginated contacts.",
             "content": {
               "application/json": {
                 "schema": {
@@ -107,7 +131,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully found contacts!"
+                      "example": "Successfully retrieved contacts."
                     },
                     "data": {
                       "type": "object",
@@ -129,27 +153,27 @@
                         },
                         "page": {
                           "type": "number",
-                          "example": 2
+                          "example": 1
                         },
                         "perPage": {
                           "type": "number",
-                          "example": 4
+                          "example": 10
                         },
                         "totalItems": {
                           "type": "number",
-                          "example": 4
+                          "example": 100
                         },
                         "totalPages": {
                           "type": "number",
-                          "example": 4
+                          "example": 10
                         },
                         "hasNextPage": {
                           "type": "boolean",
-                          "example": false
+                          "example": true
                         },
                         "hasPreviousPage": {
                           "type": "boolean",
-                          "example": true
+                          "example": false
                         }
                       }
                     }
@@ -158,28 +182,28 @@
               }
             }
           },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "404": {
-            "description": "Contacts not found",
+          "400": {
+            "description": "Invalid query parameters.",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": false
+                    "status": {
+                      "type": "integer",
+                      "example": 400
                     },
-                    "error": {
+                    "message": {
                       "type": "string",
-                      "example": "Contacts not found."
+                      "example": "Invalid query parameters provided."
                     }
                   }
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       },
