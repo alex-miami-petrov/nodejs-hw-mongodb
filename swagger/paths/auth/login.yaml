@@ -46,6 +46,6 @@ responses:
                   description: Access token for authenticated user
                   example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
   '401':
-    description: Email or password is incorrect
+    $ref: '../../components/responses/401.yaml'
   '500':
     description: Internal server error

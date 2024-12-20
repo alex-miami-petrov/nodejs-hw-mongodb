@@ -27,6 +27,6 @@ responses:
                   description: New access token
                   example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
   '401':
-    description: Invalid or expired refresh token
+    $ref: '../../components/responses/401.yaml'
   '500':
     description: Internal server error

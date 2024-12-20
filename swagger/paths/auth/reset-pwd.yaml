@@ -38,6 +38,6 @@ responses:
               type: string
               example: Password was successfully reset!
   '401':
-    description: Token error
+    $ref: '../../components/responses/401.yaml'
   '404':
     description: User not found
