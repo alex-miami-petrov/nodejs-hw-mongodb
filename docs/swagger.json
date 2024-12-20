@@ -65,7 +65,7 @@
               "type": "string",
               "example": "name"
             },
-            "description": "All contacts's fields can be mentioned. Default value - _id"
+            "description": "All contacts' fields can be mentioned. Default value - _id"
           },
           {
             "in": "query",
@@ -160,6 +160,26 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "description": "Contacts not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Contacts not found."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -284,29 +304,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Contact deleted successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully deleted the contact!"
-                    }
-                  }
-                }
-              }
-            }
+          "204": {
+            "description": "Contact deleted successfully"
           },
           "404": {
             "description": "Contact not found",
@@ -477,7 +476,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Get contact by id",
+            "description": "Successfully found contact",
             "content": {
               "application/json": {
                 "schema": {
@@ -507,6 +506,26 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "description": "Contact not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Contact not found."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -1022,6 +1041,11 @@
             "description": "contact's id",
             "type": "string",
             "example": "65e4decdd286b30065d54af9"
+          },
+          "userId": {
+            "type": "string",
+            "description": "ID of the user who owns the contact",
+            "example": "6489ac85f81a3e8d20d40a72"
           },
           "name": {
             "description": "Contact's name",
