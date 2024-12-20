@@ -9,6 +9,10 @@ properties:
     description: "contact's id"
     type: string
     example: 65e4decdd286b30065d54af9
+  userId:
+    type: string
+    description: ID of the user who owns the contact
+    example: '6489ac85f81a3e8d20d40a72'
   name:
     description: "Contact's name"
     type: string
