@@ -42,4 +42,4 @@ responses:
   '400':
     description: Invalid or expired authorization code
   '500':
-    description: Internal server error
+    $ref: '../../components/responses/500.yaml'

@@ -526,6 +526,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -604,7 +607,7 @@
             "description": "Email already in use"
           },
           "500": {
-            "description": "Internal server error"
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -684,7 +687,7 @@
             "$ref": "#/components/responses/401"
           },
           "500": {
-            "description": "Internal server error"
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -737,7 +740,7 @@
             "$ref": "#/components/responses/401"
           },
           "500": {
-            "description": "Internal server error"
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -763,7 +766,7 @@
             "description": "User not found"
           },
           "500": {
-            "description": "Internal server error"
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -827,7 +830,7 @@
             "description": "Invalid email address"
           },
           "500": {
-            "description": "Internal server error"
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -1014,7 +1017,7 @@
             "description": "Invalid or expired authorization code"
           },
           "500": {
-            "description": "Internal server error"
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -1103,7 +1106,7 @@
                 },
                 "message": {
                   "type": "string",
-                  "example": "UnauthorizedError"
+                  "example": "Unauthorized Error"
                 },
                 "data": {
                   "type": "object",
@@ -1114,6 +1117,43 @@
                     "message": {
                       "type": "string",
                       "example": "Access token expired"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Internal server Error"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal server Error"
                     }
                   }
                 }

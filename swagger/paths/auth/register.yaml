@@ -48,4 +48,4 @@ responses:
   '409':
     description: Email already in use
   '500':
-    description: Internal server error
+    $ref: '../../components/responses/500.yaml'

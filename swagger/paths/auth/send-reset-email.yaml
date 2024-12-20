@@ -36,4 +36,4 @@ responses:
   '400':
     description: Invalid email address
   '500':
-    description: Internal server error
+    $ref: '../../components/responses/500.yaml'
