@@ -10,7 +10,7 @@ parameters:
   #   name: name
   #   schema:
   #     type: string
-  #   description: Filter by contact name (partial match supported).
+  #   description: Filter by contact name
   #   example: 'John'
   # - in: query
   #   name: phoneNumber
