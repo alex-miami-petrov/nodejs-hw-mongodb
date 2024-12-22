@@ -44,34 +44,6 @@
         "parameters": [
           {
             "in": "query",
-            "name": "name",
-            "schema": {
-              "type": "string"
-            },
-            "description": "Filter by contact name (partial match supported).",
-            "example": "John"
-          },
-          {
-            "in": "query",
-            "name": "phoneNumber",
-            "schema": {
-              "type": "string"
-            },
-            "description": "Filter by contact phone number.",
-            "example": "380678345590"
-          },
-          {
-            "in": "query",
-            "name": "email",
-            "schema": {
-              "type": "string",
-              "format": "email"
-            },
-            "description": "Filter by contact email address.",
-            "example": "john.doe@example.com"
-          },
-          {
-            "in": "query",
             "name": "isFavourite",
             "schema": {
               "type": "boolean"
