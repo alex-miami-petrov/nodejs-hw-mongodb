@@ -73,3 +73,5 @@ responses:
               example: Name, email, and password are required.
   '500':
     $ref: '../../components/responses/500.yaml'
+  '401':
+    $ref: '../../components/responses/401.yaml'

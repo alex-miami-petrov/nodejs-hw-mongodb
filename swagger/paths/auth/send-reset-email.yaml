@@ -48,3 +48,5 @@ responses:
               example: Invalid email address provided.
   '500':
     $ref: '../../components/responses/500.yaml'
+  '401':
+    $ref: '../../components/responses/401.yaml'

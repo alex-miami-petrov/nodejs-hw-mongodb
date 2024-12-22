@@ -43,3 +43,5 @@ responses:
     description: Invalid or expired authorization code
   '500':
     $ref: '../../components/responses/500.yaml'
+  '401':
+    $ref: '../../components/responses/401.yaml'

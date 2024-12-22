@@ -114,93 +114,10 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved filtered and paginated contacts.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully retrieved contacts."
-                    },
-                    "data": {
-                      "type": "object",
-                      "required": [
-                        "data",
-                        "page",
-                        "perPage",
-                        "totalItems",
-                        "totalPages",
-                        "hasNextPage",
-                        "hasPreviousPage"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/contact"
-                          }
-                        },
-                        "page": {
-                          "type": "number",
-                          "example": 1
-                        },
-                        "perPage": {
-                          "type": "number",
-                          "example": 10
-                        },
-                        "totalItems": {
-                          "type": "number",
-                          "example": 100
-                        },
-                        "totalPages": {
-                          "type": "number",
-                          "example": 10
-                        },
-                        "hasNextPage": {
-                          "type": "boolean",
-                          "example": true
-                        },
-                        "hasPreviousPage": {
-                          "type": "boolean",
-                          "example": false
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "description": "Successfully retrieved filtered and paginated contacts"
           },
-          "400": {
-            "description": "Invalid query parameters.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 400
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Invalid query parameters provided."
-                    }
-                  }
-                }
-              }
-            }
+          "401": {
+            "$ref": "#/components/responses/401"
           },
           "500": {
             "$ref": "#/components/responses/500"
@@ -334,6 +251,9 @@
           "204": {
             "description": "Contact deleted successfully"
           },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
           "404": {
             "description": "Contact not found",
             "content": {
@@ -353,6 +273,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       },
@@ -456,6 +379,9 @@
               }
             }
           },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
           "404": {
             "description": "Contact not found",
             "content": {
@@ -475,6 +401,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       },
@@ -649,6 +578,9 @@
                 }
               }
             }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
           },
           "409": {
             "description": "Email already in use",
@@ -827,24 +759,7 @@
             "description": "Successfully logged out user. No content is returned."
           },
           "401": {
-            "description": "Authentication required or invalid token.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 401
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Invalid or missing authentication token."
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/401"
           },
           "404": {
             "description": "User not found.",
@@ -946,6 +861,9 @@
                 }
               }
             }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
           },
           "500": {
             "$ref": "#/components/responses/500"
@@ -1099,6 +1017,9 @@
               }
             }
           },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
           "500": {
             "$ref": "#/components/responses/500"
           }
@@ -1172,6 +1093,9 @@
           "400": {
             "description": "Invalid or expired authorization code"
           },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
           "500": {
             "$ref": "#/components/responses/500"
           }
@@ -1184,63 +1108,6 @@
       "bearerAuth": {
         "type": "http",
         "scheme": "bearer"
-      }
-    },
-    "schemas": {
-      "contact": {
-        "type": "object",
-        "required": [
-          "_id",
-          "name",
-          "phoneNumber",
-          "contactType"
-        ],
-        "properties": {
-          "_id": {
-            "description": "contact's id",
-            "type": "string",
-            "example": "65e4decdd286b30065d54af9"
-          },
-          "userId": {
-            "type": "string",
-            "description": "ID of the user who owns the contact",
-            "example": "6489ac85f81a3e8d20d40a72"
-          },
-          "name": {
-            "description": "Contact's name",
-            "type": "string",
-            "example": "John Doe"
-          },
-          "phoneNumber": {
-            "description": "Contacts's phone number",
-            "type": "number",
-            "example": 380678345590
-          },
-          "contactType": {
-            "description": "Contacts's type",
-            "type": "string",
-            "enum": [
-              "work",
-              "home",
-              "personal"
-            ]
-          },
-          "email": {
-            "description": "Contact's email",
-            "type": "string",
-            "example": "mia@ukr.net"
-          },
-          "isFavourite": {
-            "description": "Whether is contact is favourite",
-            "type": "boolean",
-            "example": false
-          },
-          "photo": {
-            "description": "Link to contact's photo",
-            "type": "string",
-            "example": "https://res.cloudinary.com/uqwgdu/image/upload/image.png"
-          }
-        }
       }
     },
     "responses": {
@@ -1315,6 +1182,64 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "contact": {
+        "type": "object",
+        "required": [
+          "_id",
+          "name",
+          "phoneNumber",
+          "contactType",
+          "userId"
+        ],
+        "properties": {
+          "_id": {
+            "description": "contact's id",
+            "type": "string",
+            "example": "65e4decdd286b30065d54af9"
+          },
+          "userId": {
+            "type": "string",
+            "description": "ID of the user who owns the contact",
+            "example": "6489ac85f81a3e8d20d40a72"
+          },
+          "name": {
+            "description": "Contact's name",
+            "type": "string",
+            "example": "John Doe"
+          },
+          "phoneNumber": {
+            "description": "Contacts's phone number",
+            "type": "number",
+            "example": 380678345590
+          },
+          "contactType": {
+            "description": "Contacts's type",
+            "type": "string",
+            "enum": [
+              "work",
+              "home",
+              "personal"
+            ]
+          },
+          "email": {
+            "description": "Contact's email",
+            "type": "string",
+            "example": "mia@ukr.net"
+          },
+          "isFavourite": {
+            "description": "Whether is contact is favourite",
+            "type": "boolean",
+            "example": false
+          },
+          "photo": {
+            "description": "Link to contact's photo",
+            "type": "string",
+            "example": "https://res.cloudinary.com/uqwgdu/image/upload/image.png"
           }
         }
       }
