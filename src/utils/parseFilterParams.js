@@ -32,18 +32,18 @@ const parseContactType = (type) => {
 };
 
 export const parseContactFilterParams = (query) => {
-  const { name, phoneNumber, email, isFavourite, contactType } = query;
+  const { isFavourite, contactType } = query;
 
-  const parsedName = parseStringOrNumber(name);
-  const parsedPhoneNumber = parseStringOrNumber(phoneNumber);
-  const parsedEmail = parseStringOrNumber(email);
+  // const parsedName = parseStringOrNumber(name);
+  // const parsedPhoneNumber = parseStringOrNumber(phoneNumber);
+  // const parsedEmail = parseStringOrNumber(email);
   const parsedIsFavourite = parseBoolean(isFavourite);
   const parsedContactType = parseContactType(contactType);
 
   return {
-    name: parsedName,
-    phoneNumber: parsedPhoneNumber,
-    email: parsedEmail,
+    // name: parsedName,
+    // phoneNumber: parsedPhoneNumber,
+    // email: parsedEmail,
     isFavourite: parsedIsFavourite,
     contactType: parsedContactType,
   };
