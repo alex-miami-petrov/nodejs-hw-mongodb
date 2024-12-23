@@ -6,12 +6,12 @@ description: Retrieve a filtered and paginated list of contacts.
 security:
   - bearerAuth: []
 parameters:
-  # - in: query
-  #   name: name
-  #   schema:
-  #     type: string
-  #   description: Filter by contact name
-  #   example: 'John'
+  - in: query
+    name: name
+    schema:
+      type: string
+    description: Filter by contact name
+    example: 'John'
   # - in: query
   #   name: phoneNumber
   #   schema:

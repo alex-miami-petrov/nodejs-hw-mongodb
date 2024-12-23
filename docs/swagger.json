@@ -44,6 +44,15 @@
         "parameters": [
           {
             "in": "query",
+            "name": "name",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by contact name",
+            "example": "John"
+          },
+          {
+            "in": "query",
             "name": "isFavourite",
             "schema": {
               "type": "boolean"
