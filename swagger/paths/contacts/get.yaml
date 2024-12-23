@@ -2,7 +2,7 @@ tags:
   - Contacts
 summary: Get list of contacts
 operationId: getContacts
-description: Retrieve a filtered and paginated list of contacts.
+description: Retrieve a filtered, paginated, and sorted list of contacts.
 security:
   - bearerAuth: []
 parameters:
@@ -12,19 +12,6 @@ parameters:
       type: string
     description: Filter by contact name
     example: 'John'
-  # - in: query
-  #   name: phoneNumber
-  #   schema:
-  #     type: string
-  #   description: Filter by contact phone number.
-  #   example: '380678345590'
-  # - in: query
-  #   name: email
-  #   schema:
-  #     type: string
-  #     format: email
-  #   description: Filter by contact email address.
-  #   example: 'john.doe@example.com'
   - in: query
     name: isFavourite
     schema:
@@ -50,9 +37,53 @@ parameters:
       type: integer
     description: Number of items per page.
     example: 10
+  - in: query
+    name: sortBy
+    schema:
+      type: string
+      enum: [name, email, isFavourite]
+    description: Field by which to sort the contacts.
+    example: 'name'
+  - in: query
+    name: sortOrder
+    schema:
+      type: string
+      enum: [ASC, DESC]
+    description: Order to sort the contacts (ascending or descending).
+    example: 'ASC'
 responses:
   '200':
-    description: Successfully retrieved filtered and paginated contacts
+    description: Successfully retrieved filtered, paginated, and sorted contacts
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully retrieved contacts.
+            data:
+              type: array
+              items:
+                $ref: '../../components/schemas/contact.yaml'
+            pagination:
+              type: object
+              properties:
+                total:
+                  type: integer
+                  example: 100
+                page:
+                  type: integer
+                  example: 1
+                perPage:
+                  type: integer
+                  example: 10
+                totalPages:
+                  type: integer
+                  example: 10
   '401':
     $ref: '../../components/responses/401.yaml'
   '500':
