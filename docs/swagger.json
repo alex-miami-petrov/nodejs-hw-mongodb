@@ -375,7 +375,7 @@
                     "type": "string",
                     "example": "mia@ukr.net"
                   },
-                  "phone": {
+                  "phoneNumber": {
                     "description": "Contact's phone number",
                     "type": "number",
                     "example": 380678345590
