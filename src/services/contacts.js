@@ -21,7 +21,7 @@ const getAllContacts = async ({
   const contactsQuery = Contact.find({ userId: filter.userId });
 
   if (filter.name) {
-    contactsQuery.where('name').equals(filter.name);
+    contactsQuery.where('name').regex(new RegExp(filter.name, 'i'));
   }
   if (filter.phoneNumber) {
     contactsQuery.where('phoneNumber').regex(new RegExp(filter.phoneNumber));
