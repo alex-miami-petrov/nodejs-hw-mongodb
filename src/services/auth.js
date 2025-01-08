@@ -124,8 +124,6 @@ export const resetPassword = async (payload) => {
   try {
     entries = jwt.verify(payload.token, process.env.JWT_SECRET);
   } catch (error) {
-    // if (error instanceof Error) throw createHttpError(401, error.message);
-    // throw error;
     if (error.name === 'JsonWebToken' || error.name === 'TokenExpiredError') {
       throw createHttpError(401, 'Token error');
     }
@@ -181,31 +179,3 @@ export const loginOrRegister = async (payload) => {
 
   return session;
 };
-
-// export const loginOrRegister = async (payload) => {
-//   let user = await User.findOne({ email: payload.email });
-
-//   let createdUser;
-
-//   if (!user) {
-//     const password = await bcrypt.hash(randomBytes(30).toString('base64'), 10);
-
-//     createdUser = await User.create({
-//       name: payload.name,
-//       email: payload.email,
-//       password,
-//     });
-//   } else {
-//     createdUser = user;
-//   }
-
-//   const session = await Session.create({
-//     userId: createdUser._id,
-//     accessToken: randomBytes(30).toString('base64'),
-//     refreshToken: randomBytes(30).toString('base64'),
-//     accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
-//     refreshTokenValidUntil: new Date(Date.now() + ONE_DAY),
-//   });
-
-//   return session;
-// };
