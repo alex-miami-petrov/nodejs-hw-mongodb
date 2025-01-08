@@ -3,8 +3,19 @@ import initMongoConnection from './db/initMongoConnection.js';
 import setupServer from './server.js';
 
 dotenv.config();
-console.log('MongoDB URI:', process.env.MONGODB_URI);
 
 initMongoConnection().then(() => {
   setupServer();
 });
+
+// const bootstrap = async () => {
+//   try {
+//     await initMongoConnection();
+//     setupServer();
+//   } catch (error) {
+//     console.error('Initialization failed:', error);
+//     process.exit(1);
+//   }
+// };
+
+// void bootstrap();
